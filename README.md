@@ -177,8 +177,8 @@ python3 bot.py
 ## Credits : Thanks to 
  - Thanks To [Library](https://github.com/pyrogram/pyrogram)
  - Awesome [Media-Search-bot](https://github.com/SudoR2spr)
- - Thanks To AngelDeveloperr for stream feature
- - Thanks To [Tech VJ](https://github.com/LazyDeveloperr)
+ - Thanks To Lazy Developer for stream feature
+ - Thanks To [Lazy Developer](https://github.com/LazyDeveloperr)
  - Thanks To All Everyone In This Journey
 
 ## Connect with me <img src="https://media.giphy.com/media/iY8CRBdQXODJSCERIr/giphy.gif" width="30px">
