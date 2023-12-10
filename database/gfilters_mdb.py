@@ -16,8 +16,8 @@ mydb = myclient[DATABASE_NAME]
 
 
 async def add_gfilter(gfilters, text, reply_text, btn, file, alert):
-    myangel = mydb[str(gfilters)]
-    # myangel.create_index([('text', 'text')])
+    mycol = mydb[str(gfilters)]
+    # mycol.create_index([('text', 'text')])
 
     data = {
         'text':str(text),
@@ -28,16 +28,16 @@ async def add_gfilter(gfilters, text, reply_text, btn, file, alert):
     }
 
     try:
-        myangel.update_one({'text': str(text)},  {"$set": data}, upsert=True)
+        mycol.update_one({'text': str(text)},  {"$set": data}, upsert=True)
     except:
         logger.exception('Some error occured!', exc_info=True)
              
      
 async def find_gfilter(gfilters, name):
-    myangel = mydb[str(gfilters)]
+    mycol = mydb[str(gfilters)]
     
-    query = myangel.find( {"text":name})
-    # query = myangel.find( { "$text": {"$search": name}})
+    query = mycol.find( {"text":name})
+    # query = mycol.find( { "$text": {"$search": name}})
     try:
         for file in query:
             reply_text = file['reply']
@@ -53,10 +53,10 @@ async def find_gfilter(gfilters, name):
 
 
 async def get_gfilters(gfilters):
-    myangel = mydb[str(gfilters)]
+    mycol = mydb[str(gfilters)]
 
     texts = []
-    query = myangel.find()
+    query = mycol.find()
     try:
         for file in query:
             text = file['text']
@@ -67,12 +67,12 @@ async def get_gfilters(gfilters):
 
 
 async def delete_gfilter(message, text, gfilters):
-    myangel = mydb[str(gfilters)]
+    mycol = mydb[str(gfilters)]
     
     myquery = {'text':text }
-    query = myangel.count_documents(myquery)
+    query = mycol.count_documents(myquery)
     if query == 1:
-        myangel.delete_one(myquery)
+        mycol.delete_one(myquery)
         await message.reply_text(
             f"'`{text}`'  deleted. I'll not respond to that gfilter anymore.",
             quote=True,
@@ -86,18 +86,18 @@ async def del_allg(message, gfilters):
         await message.edit_text("Nothing to Remove !")
         return
 
-    myangel = mydb[str(gfilters)]
+    mycol = mydb[str(gfilters)]
     try:
-        myangel.drop()
+        mycol.drop()
         await message.edit_text(f"All gfilters has been removed !")
     except:
         await message.edit_text("Couldn't remove all gfilters !")
         return
 
 async def count_gfilters(gfilters):
-    myangel = mydb[str(gfilters)]
+    mycol = mydb[str(gfilters)]
 
-    count = myangel.count()
+    count = mycol.count()
     return False if count == 0 else count
 
 
@@ -109,8 +109,8 @@ async def gfilter_stats():
 
     totalcount = 0
     for collection in collections:
-        myangel = mydb[collection]
-        count = myangel.count()
+        mycol = mydb[collection]
+        count = mycol.count()
         totalcount += count
 
     totalcollections = len(collections)
