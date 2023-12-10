@@ -15,8 +15,8 @@ mydb = myclient[DATABASE_NAME]
 
 
 async def add_filter(grp_id, text, reply_text, btn, file, alert):
-    myangel = mydb[str(grp_id)]
-    # myangel.create_index([('text', 'text')])
+    mycol = mydb[str(grp_id)]
+    # mycol.create_index([('text', 'text')])
 
     data = {
         'text':str(text),
@@ -27,16 +27,16 @@ async def add_filter(grp_id, text, reply_text, btn, file, alert):
     }
 
     try:
-        myangel.update_one({'text': str(text)},  {"$set": data}, upsert=True)
+        mycol.update_one({'text': str(text)},  {"$set": data}, upsert=True)
     except:
         logger.exception('Some error occured!', exc_info=True)
              
      
 async def find_filter(group_id, name):
-    myangel = mydb[str(group_id)]
+    mycol = mydb[str(group_id)]
     
-    query = myangel.find( {"text":name})
-    # query = myangel.find( { "$text": {"$search": name}})
+    query = mycol.find( {"text":name})
+    # query = mycol.find( { "$text": {"$search": name}})
     try:
         for file in query:
             reply_text = file['reply']
@@ -52,10 +52,10 @@ async def find_filter(group_id, name):
 
 
 async def get_filters(group_id):
-    myangel = mydb[str(group_id)]
+    mycol = mydb[str(group_id)]
 
     texts = []
-    query = myangel.find()
+    query = mycol.find()
     try:
         for file in query:
             text = file['text']
@@ -66,12 +66,12 @@ async def get_filters(group_id):
 
 
 async def delete_filter(message, text, group_id):
-    myangel = mydb[str(group_id)]
+    mycol = mydb[str(group_id)]
     
     myquery = {'text':text }
-    query = myangel.count_documents(myquery)
+    query = mycol.count_documents(myquery)
     if query == 1:
-        myangel.delete_one(myquery)
+        mycol.delete_one(myquery)
         await message.reply_text(
             f"'`{text}`'  deleted. I'll not respond to that filter anymore.",
             quote=True,
@@ -86,9 +86,9 @@ async def del_all(message, group_id, title):
         await message.edit_text(f"Nothing to remove in {title}!")
         return
 
-    myangel = mydb[str(group_id)]
+    mycol = mydb[str(group_id)]
     try:
-        myangel.drop()
+        mycol.drop()
         await message.edit_text(f"All filters from {title} has been removed")
     except:
         await message.edit_text("Couldn't remove all filters from group!")
@@ -96,9 +96,9 @@ async def del_all(message, group_id, title):
 
 
 async def count_filters(group_id):
-    myangel = mydb[str(group_id)]
+    mycol = mydb[str(group_id)]
 
-    count = myangel.count()
+    count = mycol.count()
     return False if count == 0 else count
 
 
@@ -110,8 +110,8 @@ async def filter_stats():
 
     totalcount = 0
     for collection in collections:
-        myangel = mydb[collection]
-        count = myangel.count()
+        mycol = mydb[collection]
+        count = mycol.count()
         totalcount += count
 
     totalcollections = len(collections)
