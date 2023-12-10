@@ -1,11 +1,11 @@
 services:
   # A Docker web service
   - type: web
-    name: AUTO-FILTER-BOT 
+    name: Opleech-Filter-Bot
     env: python
     startCommand: python3 bot.py
     buildCommand: pip3 install -U -r requirements.txt
-    repo: https://github.com/mohit828/filterbot.git # optional
+    repo: https://github.com/SudoR2spr/Opleech-Filter-Bot.git # optional
     region: oregon # optional (defaults to oregon)
     plan: free # optional (defaults to starter)
     branch: main # optional (defaults to master)
