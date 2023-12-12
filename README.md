@@ -198,7 +198,7 @@ python3 bot.py
 -----
 ## Credits: [𝐖𝐎𝐎𝐃𝐜𝐫𝐚𝐟𝐭](https://t.me/Farooq_is_KING)
 
-🦋 Last Edited on: 12/10/2023
+🦋 Last Edited on: 12/12/2023
 
 Fork the repo and edit as per your needs.
 
